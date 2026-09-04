@@ -1,1 +1,1 @@
-# alu-web_react
+This is the README file, to be updated later 
