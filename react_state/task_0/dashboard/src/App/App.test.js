@@ -72,3 +72,21 @@ describe('<App />', () => {
         window.alert.mockRestore();
     })
 });
+
+it('verifies that the default state for displayDrawer is false', () => {
+    const wrapper = shallow(<App />);
+    expect(wrapper.state('displayDrawer')).toEqual(false);
+});
+
+it('verifies that handleDisplayDrawer sets displayDrawer to true', () => {
+    const wrapper = shallow(<App />);
+    wrapper.instance().handleDisplayDrawer();
+    expect(wrapper.state('displayDrawer')).toEqual(true);
+});
+
+it('verifies that handleHideDrawer sets displayDrawer to false', () => {
+    const wrapper = shallow(<App />);
+    wrapper.setState({ displayDrawer: true });
+    wrapper.instance().handleHideDrawer();
+    expect(wrapper.state('displayDrawer')).toEqual(false);
+});

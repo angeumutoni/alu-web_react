@@ -79,3 +79,25 @@ describe('<Notifications />', () => {
         expect(spy).toHaveBeenCalledWith('Notification 1 has been marked as read');
     })
 });
+
+it('calls handleDisplayDrawer when the menu item is clicked', () => {
+    const handleDisplayDrawer = jest.fn();
+    const wrapper = shallow(
+        <Notifications handleDisplayDrawer={ handleDisplayDrawer } />
+    );
+    wrapper.find('.menuItem').simulate('click');
+    expect(handleDisplayDrawer).toHaveBeenCalled();
+});
+
+it('calls handleHideDrawer when the close button is clicked', () => {
+    const handleHideDrawer = jest.fn();
+    const wrapper = shallow(
+        <Notifications
+            displayDrawer={ true }
+            listNotifications={ listNotifications }
+            handleHideDrawer={ handleHideDrawer }
+        />
+    );
+    wrapper.find('button[aria-label="Close"]').simulate('click');
+    expect(handleHideDrawer).toHaveBeenCalled();
+});

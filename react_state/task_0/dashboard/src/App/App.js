@@ -16,9 +16,14 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.handleKeydown = this.handleKeydown.bind(this);
+    this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
+    this.handleHideDrawer = this.handleHideDrawer.bind(this);
+
+    this.state = {
+      displayDrawer: false,
+    };
   }
 
-  // Lifecycle Methods
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeydown);
   }
@@ -27,7 +32,6 @@ class App extends React.Component {
     window.removeEventListener('keydown', this.handleKeydown);
   }
 
-  // Handle Log out
   handleKeydown(e) {
     if (e.ctrlKey && e.key === 'h') {
       alert('Logging you out');
@@ -35,8 +39,17 @@ class App extends React.Component {
     }
   }
 
+  handleDisplayDrawer() {
+    this.setState({ displayDrawer: true });
+  }
+
+  handleHideDrawer() {
+    this.setState({ displayDrawer: false });
+  }
+
   render() {
-    const { isLoggedIn, logOut } = this.props;
+    const { isLoggedIn } = this.props;
+    const { displayDrawer } = this.state;
 
     const listCourses = [
       { id: 1, name: 'ES6', credit: 60 },
@@ -48,11 +61,16 @@ class App extends React.Component {
       { id: 1, type: 'default', value: 'New course available' },
       { id: 2, type: 'urgent', value: 'New course available' },
       { id: 3, type: 'urgent', html: htmlObj },
-    ]
+    ];
 
     return (
       <>
-        <Notifications displayDrawer={ false } listNotifications={ listNotifications } />
+        <Notifications
+          displayDrawer={ displayDrawer }
+          listNotifications={ listNotifications }
+          handleDisplayDrawer={ this.handleDisplayDrawer }
+          handleHideDrawer={ this.handleHideDrawer }
+        />
         <div className="App">
           <Header />
           { isLoggedIn ?
@@ -70,7 +88,7 @@ class App extends React.Component {
           <Footer />
         </div>
       </>
-    )
+    );
   }
 }
 
